@@ -9,7 +9,9 @@
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_above="@id/linearLayout"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_1"
@@ -30,7 +32,9 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout1">
+
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@id/btn_4"
