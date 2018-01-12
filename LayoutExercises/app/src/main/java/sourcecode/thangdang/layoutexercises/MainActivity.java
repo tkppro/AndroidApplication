@@ -31,12 +31,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnSqrt;
     private Button mBtnClear;
     private Button mBtnBack;
+    private Button mBtnOneDiv;
+    private Button mBtnPercent;
+    private Button mBtnAddnDiv;
     private EditText mEdtInput;
     private TextView mTvResult;
 
     double a = Double.NaN;
     double b = Double.NaN;
-    private boolean mAddition,mSubtraction,mDivision,mMultiplication,mSqrt;
+    private boolean mAddition,mSubtraction,mDivision,mMultiplication,
+            mSqrt,mOneDiv,mPercentage,mAddnDiv;
     StringBuilder str = new StringBuilder();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +63,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnMultiple = (Button) findViewById(R.id.btn_multiple);
         mBtnDevide = (Button) findViewById(R.id.btn_devide);
         mBtnEqual = (Button) findViewById(R.id.btn_equal);
+        mBtnOneDiv = (Button) findViewById(R.id.btn_one_devide_x);
+        mBtnPercent = (Button) findViewById(R.id.btn_percent);
         mBtnDot = (Button) findViewById(R.id.btn_dot);
         mBtnSqrt = (Button) findViewById(R.id.btn_sqrt);
         mBtnClear = (Button) findViewById(R.id.btn_C);
         mEdtInput = (EditText) findViewById(R.id.edt_input);
         mTvResult = (TextView) findViewById(R.id.tv_result);
         mBtnBack = (Button) findViewById(R.id.btn_back);
+        mBtnAddnDiv = (Button) findViewById(R.id.btn_plus_minus);
         setClickListener();
     }
 
@@ -89,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnClear.setOnClickListener(this);
         mBtnBack.setOnClickListener(this);
         mBtnSqrt.setOnClickListener(this);
+        mBtnOneDiv.setOnClickListener(this);
+        mBtnPercent.setOnClickListener(this);
+        mBtnAddnDiv.setOnClickListener(this);
     }
 
     @Override
@@ -100,43 +110,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_1:
                 mEdtInput.append("1");
                 break;
+
             case R.id.btn_2:
                 mEdtInput.append("2");
                 break;
+
             case R.id.btn_3:
                 mEdtInput.append("3");
                 break;
+
             case R.id.btn_4:
                 mEdtInput.append("4");
                 break;
-            case R.id.btn_5:
 
+            case R.id.btn_5:
                 mEdtInput.append("5");
                 break;
+
             case R.id.btn_6:
                 mEdtInput.append("6");
                 break;
-            case R.id.btn_7:
 
+            case R.id.btn_7:
                 mEdtInput.append("7");
                 break;
+
             case R.id.btn_8:
                 mEdtInput.append("8");
                 break;
+
             case R.id.btn_9:
                 mEdtInput.append("9");
                 break;
+
             case R.id.btn_0:
                 mEdtInput.append("0");
                 break;
+
             case R.id.btn_plus :
                 mAddition = true;
                 if(!Double.isNaN(a)){
                     b = Double.parseDouble(mEdtInput.getText().toString());
                     a = a + b;
                 }
-                else
+                else {
                     a = Double.parseDouble(mEdtInput.getText().toString());
+                }
                 mTvResult.setText(a + " + ");
                 mEdtInput.setText(null);
                 break;
@@ -147,33 +166,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     b = Double.parseDouble(mEdtInput.getText().toString());
                     a = a - b;
                 }
-                else
+                else{
                     a = Double.parseDouble(mEdtInput.getText().toString());
+                }
                 mTvResult.setText(a + " - ");
                 mEdtInput.setText(null);
                 break;
+
             case R.id.btn_multiple:
                 mMultiplication = true;
                 if(!Double.isNaN(a)){
                     b = Double.parseDouble(mEdtInput.getText().toString());
                     a = a * b;
                 }
-                else
+                else{
                     a = Double.parseDouble(mEdtInput.getText().toString());
+                }
                 mTvResult.setText(a + " * ");
                 mEdtInput.setText(null);
                 break;
+
             case R.id.btn_devide:
                 mDivision = true;
                 if(!Double.isNaN(a)){
                     b = Double.parseDouble(mEdtInput.getText().toString());
                     a = a / b;
                 }
-                else
+                else{
                     a = Double.parseDouble(mEdtInput.getText().toString());
+                }
                 mTvResult.setText(a + " / ");
                 mEdtInput.setText(null);
                 break;
+
             case R.id.btn_equal:
                 if(mAddition == true){
                     mTvResult.setText(null);
@@ -210,36 +235,73 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }catch (ArithmeticException e){
                     }
                 }
-                if (mSqrt == true && !Double.isNaN(a)){
-                    double result = Math.sqrt(a);
+                if (mSqrt == true ){
+                    try {
+                        double result = Math.sqrt(a);
+                        mEdtInput.setText(String.valueOf(result));
+                        mTvResult.setText("√" + a);
+                        mSqrt = false;
+                    }catch (ArithmeticException e){
+                    }
+                }
+                if(mOneDiv == true){
+                    double result = 1 / a;
                     mEdtInput.setText(String.valueOf(result));
-                    mTvResult.setText(null);
-                    mSqrt = false;
+                    mTvResult.setText("1/" + a);
+                    mOneDiv = false;
+                }
+                if (mPercentage == true) {
+                    double result = a / 100;
+                    mEdtInput.setText(String.valueOf(result));
+                    mTvResult.setText(a + "%");
+                    mPercentage = false;
+                }
+                if (mAddnDiv == true){
+                    double result = -a;
+                    mEdtInput.setText(String.valueOf(result));
+                    mTvResult.setText("-" + a);
+                    mAddnDiv = false;
                 }
                 a = Double.NaN;
                 mEdtInput.setSelection(mEdtInput.getText().length());
                 break;
+
             case R.id.btn_sqrt :
-                mEdtInput.append("√");
+                mTvResult.setText("√");
+                a = Double.parseDouble(mEdtInput.getText().toString());
                 mSqrt = true;
-
                 break;
+
             case R.id.btn_one_devide_x :
-                break;
-            case R.id.btn_percent :
+                mTvResult.setText("1/");
+                a = Double.parseDouble(mEdtInput.getText().toString());
+                mOneDiv = true;
                 break;
 
+            case R.id.btn_percent :
+                mTvResult.setText("%");
+                a = Double.parseDouble(mEdtInput.getText().toString());
+                mPercentage = true;
+                break;
+            case R.id.btn_plus_minus :
+                a = Double.parseDouble(mEdtInput.getText().toString());
+                mEdtInput.setText("-" + a);
+                mAddnDiv = true;
+                break;
             case R.id.btn_dot :
                 mEdtInput.append(".");
                 break;
+
             case R.id.btn_C :
                 a = Double.NaN;
                 mTvResult.setText("");
                 mEdtInput.setText("");
                 break;
+
             case R.id.btn_CE :
                 mEdtInput.setText(null);
                 break;
+
             case R.id.btn_back :
                 if(mEdtInput.getText().toString().length()!=0){
                     StringBuilder strB = new StringBuilder(mEdtInput.getText().toString());
@@ -248,6 +310,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else
                    break;
+                break;
+
         }
         }catch (NumberFormatException e){
             toast.show();
